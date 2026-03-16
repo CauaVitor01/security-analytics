@@ -2,8 +2,6 @@
 
 Este repositório contém análises de dados de segurança utilizando ferramentas de **Security Analytics** para identificar comportamentos suspeitos em grandes volumes de logs.
 
-Os projetos demonstram como transformar **dados brutos em inteligência acionável** para equipes de SOC.
-
 ## Conteúdo do Repositório
 
 - Consultas avançadas em ambientes ELK
