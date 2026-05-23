@@ -57,13 +57,5 @@ A exploracao de sistemas Windows frequentemente abusa de ferramentas nativas do 
 
 ---
 
-## 5. Notas do Analista: Consolidacao e Triagem do Relatorio
-Durante a estruturacao e refinamento deste documento, algumas perguntas contidas no roteiro original do laboratorio foram intencionalmente omitidas com base em criterios de relevancia analitica para portfolios profissionais:
-
-* **Remocao da pergunta:** *"Quantos eventos foram coletados e inseridos no indice principal?"*
-* **Justificativa:** Metricas globais de volume total de logs brutos no inicio de um laboratorio indicam apenas a carga geral carregada no SIEM Splunk. Esse dado nao representa um Indicador de Comprometimento (IoC) especifico e nao traz valor tecnico sobre o modus operandi, as ferramentas ou as falhas exploradas pelo atacante. O foco do analista deve residir estritamente nos artefatos gerados pela ameaca.
-
----
-
-## 6. Conclusao Tecnica
+## 5. Conclusao Tecnica
 A investigacao confirmou que o incidente envolveu taticas classicas de estabelecimento de persistencia por conta local e manipulacao de chaves de registro, seguidas de execucao de codigo ofuscado. A correta habilitacao dos logs de auditoria do PowerShell (Script Block Logging) no ambiente Windows foi o fator decisivo para que a equipe de SOC conseguisse obter a visibilidade necessaria para extrair a URL de Comando e Controle (C2) externa do adversario.
