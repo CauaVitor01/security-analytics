@@ -1,61 +1,73 @@
-Fase 2: Identificação e Definição de Escopo
+# Fase 2: Identificacao e Definicao de Escopo
 
-Este documento detalha o processo de deteção, validação e análise da extensão de incidentes de segurança, utilizando uma abordagem orientada por inteligência.
+> **Nota de Documentacao:** Este arquivo Markdown apresenta o detalhamento do processo de detecao, validacao e analise da extensao de incidentes de seguranca, utilizando uma abordagem orientada por inteligencia. Para a analise completa e diagramas visuais, consulte o arquivo PDF (`Identification_and_scoping.pdf`) disponivel neste repositorio.
 
-1. Introdução e Valor Estratégico
+---
 
-A Identificação é o ponto de transição onde um evento digital é validado como um incidente real.
+## 1. Introducao e Valor Estrategico
 
-Deteção Célere: A rapidez nesta fase é o fator determinante para limitar danos e reduzir o tempo de recuperação (MTTR - Mean Time to Recovery).
+A Identificacao e o ponto de transicao onde um evento digital e validado como um incidente real.
 
-2. A Tríade da Identificação
+* **Detecao Celere:** A rapidez nesta fase e o fator determinante para limitar danos e reduzir o tempo de recuperacao (MTTR - *Mean Time to Recovery*).
 
-A eficácia da deteção depende da harmonia entre três pilares:
+---
 
-PilarDescriçãoFerramentas/AçõesTecnologiaGeração de alertas e visibilidade técnica.Aurora EDR, Sysmon, Snort.ProcessosFluxo de triagem e escalonamento.Triagem -> Validação -> Notificação CSIRT.PessoasInterpretação humana e tomada de decisão.Analistas de SOC (N1/N2/N3).3. Visibilidade Técnica e Ferramental
+## 2. A Triade da Identificacao
 
-Para garantir que nenhum ponto cego persista na infraestrutura, as seguintes soluções foram implementadas e dominadas:
+A eficacia da detecao depende da harmonia entre tres pilares fundamentais:
 
-EDR (Endpoint Detection & Response): Aurora EDR e Wazuh para monitorização profunda de hosts.
+| Pilar | Descricao | Ferramentas/Acoes |
+| :--- | :--- | :--- |
+| **Tecnologia** | Geracao de alertas e visibilidade tecnica. | Aurora EDR, Sysmon, Snort. |
+| **Processos** | Fluxo de triagem e escalonamento. | Triagem -> Validacao -> Notificacao CSIRT. |
+| **Pessoas** | Interpretacao humana e tomada de decisao. | Analistas de SOC (N1/N2/N3). |
 
-IDPS (Intrusion Detection/Prevention): Snort para análise de tráfego de rede e assinaturas maliciosas.
+---
 
-SIEM (Security Information & Event Management): Splunk e ELK Stack para correlação de logs centralizada.
+## 3. Visibilidade Tecnica e Ferramental
 
-4. Definição de Escopo e Análise de Impacto
+Para garantir que nenhum ponto cego persista na infraestrutura, as seguintes solucoes foram implementadas e dominadas:
 
-Utilizamos o Inventário de Ativos e a Planilha da Perdição (SoD) para correlacionar IoCs com ativos críticos.
+* **EDR (Endpoint Detection & Response):** Aurora EDR e Wazuh para monitorizacao profunda de hosts.
+* **IDPS (Intrusion Detection/Prevention):** Snort para analise de trafego de rede e assinaturas maliciosas.
+* **SIEM (Security Information & Event Management):** Splunk e ELK Stack para correlacao de logs centralizada.
 
-Inventário de Ativos (Alvos Monitorados)
+---
 
-AtivoEndereço IPOSProprietárioDC-01172.16.1.10Windows Server 2019Derick MarshallMAILSVR-01172.16.1.15Windows Server 2019Stan SimonWKSTN-02172.16.1.151Windows 10 ProMichael Ascot
+## 4. Definicao de Escopo e Analise de Impacto
 
-Enriquecimento de Artefatos (Planilha da Perdição - SoD)
+Utilizamos o Inventario de Ativos e a Planilha da Perdicao (SoD) para correlacionar Indicadores de Comprometimento (IoCs) com ativos criticos.
+
+### Inventario de Ativos (Alvos Monitorados)
+
+| Ativo | Endereco IP | OS | Proprietario |
+| :--- | :--- | :--- | :--- |
+| **DC-01** | 172.16.1.10 | Windows Server 2019 | Derick Marshall |
+| **MAILSVR-01** | 172.16.1.15 | Windows Server 2019 | Stan Simon |
+| **WKSTN-02** | 172.16.1.151 | Windows 10 Pro | Michael Ascot |
+
+### Enriquecimento de Artefatos (Planilha da Perdicao - SoD)
 
 A SoD acelera a resposta ao identificar Indicadores de Comprometimento (IoCs) conhecidos:
 
-IP Malicioso: 188.40.75.132 (Hospedagem de Malware).
+* **IP Malicioso:** `188.40.75.132` (Hospedagem de Malware).
+* **Dominio Phishing:** `b24b-158-62-19-6.ngrok-free.app` (Infraestrutura Ngrok).
+* **Hash (SHA1):** `75ec7d0d1b6b2b4c816cbc1b71cd0f8f06bd8c1b` (Malware Payload).
 
-Domínio Phishing: b24b-158-62-19-6.ngrok-free.app (Ngrok-free).
+---
 
-Hash (SHA1): 75ec7d0d1b6b2b4c816cbc1b71cd0f8f06bd8c1b (Malware Payload).
+## 5. Ciclo de Feedback Orientado por Inteligencia
 
-Ciclo de Feedback Orientado por Inteligência
+A investigacao nao e linear. Ela segue um ciclo iterativo de refinamento constante:
 
-A investigação não é linear. Ela segue um ciclo iterativo de refinamento:
+1. **Notificacao:** Gatilho inicial do incidente.
+2. **Documentacao:** Registo detalhado para base da investigacao.
+3. **Coleta de Evidencias:** Extracao de logs, trafego e artefatos volateis.
+4. **Identificacao de Artefatos:** Isolamento de IoCs.
+5. **Ponto de Pivo:** Descoberta de novas areas (ex: movimento lateral), forcando o retorno a fase de documentacao para expandir o escopo da investigacao original.
 
-Notificação: Gatilho inicial do incidente.
+---
 
-Documentação: Registo detalhado para base da investigação.
+## 6. Conclusao
 
-Coleta de Evidências: Logs, tráfego e artefatos voláteis.
-
-Identificação de Artefatos: Extração de IoCs.
-
-Ponto de Pivô: Descoberta de novas áreas (ex: movimento lateral), forçando o retorno à fase de documentação para expandir o escopo.
-
- Conclusão
-
-A identificação precisa permite que a expertise técnica seja aplicada no momento certo, assegurando que o incidente seja gerido com precisão e que as partes interessadas sejam notificadas prontamente. O sucesso aqui define a eficácia da próxima fase: Contenção.
-
-📂 Documento PDF Relacionado: Identification_and_scoping.pdf
+A identificacao precisa permite que a expertise tecnica seja aplicada no momento certo, assegurando que o incidente seja gerido com precisao e que as partes interessadas sejam notificadas prontamente. O sucesso da triagem inicial define diretamente a eficacia da proxima fase do ciclo de vida de resposta: a Contencao.
